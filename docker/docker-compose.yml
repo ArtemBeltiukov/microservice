@@ -116,7 +116,8 @@ services:
       
     depends_on:
       - config
-    
+    restart:
+      on-failure:10
     
     networks:
       - local 
