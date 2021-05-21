@@ -1,0 +1,139 @@
+version: '3'
+networks:
+  local:
+    driver: bridge
+  
+services:
+  workplaces3:
+    build:
+      context: D:\epam\projects\master\docker\dockerfiles\workplaces3\
+      
+    container_name: workplaces3
+    image: workplaces3:latest
+    
+    volumes:
+      - "./web/src:/web/src"
+    ports:
+      - "9095:9095"
+    
+    depends_on:
+      - eureka
+    restart:
+      on-failure:10
+    
+    networks:
+      - local
+
+  workplaces2:
+    build:
+      context: D:\epam\projects\master\docker\dockerfiles\workplaces2\
+      
+    container_name: workplaces2
+    image: workplaces2:latest
+    
+    volumes:
+      - "./web/src:/web/src"
+    ports:
+      - "9091:9091"
+    
+    depends_on:
+      - eureka
+    restart:
+      on-failure:10
+    
+    networks:
+      - local
+
+  workplaces1:
+    build:
+      context: D:\epam\projects\master\docker\dockerfiles\workplaces1\
+      
+    container_name: workplaces1
+    image: workplaces1:latest
+    
+    volumes:
+      - "./web/src:/web/src"
+    ports:
+      - "9090:9090"
+    
+    depends_on:
+      - eureka
+    restart:
+      on-failure:10
+    
+    networks:
+      - local
+      
+  gateway:
+    build:
+      context: D:\epam\projects\master\docker\dockerfiles\gateway\
+      
+    container_name: gateway
+    image: gateway:latest
+    
+    volumes:
+      - "./web/src:/web/src"
+    ports:
+      - "9094:9094"
+    
+    depends_on:
+      - eureka
+    restart:
+      on-failure:10
+    
+    networks:
+      - local  
+      
+  employees:
+    build:
+      context: D:\epam\projects\master\docker\dockerfiles\employees\
+      
+    container_name: employees
+    image: employees:latest
+    
+    volumes:
+      - "./web/src:/web/src"
+    ports:
+      - "9092:9092"
+    depends_on:
+      - eureka
+    restart:
+      on-failure:10
+    networks:
+      - local       
+      
+  eureka:
+    build:
+      context: D:\epam\projects\master\docker\dockerfiles\eureka\
+      
+    container_name: eureka
+    image: eureka:latest
+    
+    volumes:
+      - "./web/src:/web/src"
+    ports:
+      - "8282:8282"
+      
+    depends_on:
+      - config
+    
+    
+    networks:
+      - local 
+
+  
+  config:
+    build:
+      context: D:\epam\projects\master\docker\dockerfiles\config\
+      
+    container_name: config
+    image: config:latest
+    
+    volumes:
+      - "./web/src:/web/src"
+    ports:
+      - "8888:8888"
+    
+    networks:
+      - local
+      

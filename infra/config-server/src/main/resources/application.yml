@@ -2,9 +2,13 @@ spring:
   cloud:
     config:
       server:
-
+        native:
+          searchLocations: classpath:/shared
+        git:
+          uri: https://github.com/ArtemBeltiukov/microservices-config.git
+          default-label: main
   profiles:
-     active: native
+    active: git
 
 server:
   port: ${CONFIG_PORT:8888}
