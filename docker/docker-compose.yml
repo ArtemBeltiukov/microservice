@@ -2,9 +2,12 @@ version: '3'
 networks:
   local:
     driver: bridge
+  docker-elk_elk:
+    external: true
   
 services:
   workplaces3:
+    mem_limit: 256mb
     build:
       context: D:\epam\projects\master\docker\dockerfiles\workplaces3\
       
@@ -23,8 +26,10 @@ services:
     
     networks:
       - local
+      - docker-elk_elk
 
   workplaces2:
+    mem_limit: 256mb
     build:
       context: D:\epam\projects\master\docker\dockerfiles\workplaces2\
       
@@ -43,8 +48,10 @@ services:
     
     networks:
       - local
+      - docker-elk_elk
 
   workplaces1:
+    mem_limit: 256mb
     build:
       context: D:\epam\projects\master\docker\dockerfiles\workplaces1\
       
@@ -63,8 +70,10 @@ services:
     
     networks:
       - local
+      - docker-elk_elk
       
   gateway:
+    mem_limit: 256mb
     build:
       context: D:\epam\projects\master\docker\dockerfiles\gateway\
       
@@ -83,8 +92,10 @@ services:
     
     networks:
       - local  
+      - docker-elk_elk
       
   employees:
+    mem_limit: 256mb
     build:
       context: D:\epam\projects\master\docker\dockerfiles\employees\
       
@@ -100,7 +111,8 @@ services:
     restart:
       on-failure:10
     networks:
-      - local       
+      - local 
+      - docker-elk_elk      
       
   eureka:
     build:
@@ -121,9 +133,11 @@ services:
     
     networks:
       - local 
+      - docker-elk_elk
 
   
   config:
+    mem_limit: 256mb
     build:
       context: D:\epam\projects\master\docker\dockerfiles\config\
       
@@ -137,4 +151,5 @@ services:
     
     networks:
       - local
+      - docker-elk_elk
       
